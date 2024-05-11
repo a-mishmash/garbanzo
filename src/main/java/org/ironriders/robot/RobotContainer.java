@@ -1,12 +1,11 @@
 package org.ironriders.robot;
 
-import org.ironriders.constants.OperatorConstants;
-import org.ironriders.commands.DriveCommand;
-import org.ironriders.subsystems.DriveSubsystem;
+import org.ironriders.commands.SwerveCommands;
+import org.ironriders.constants.DriveConstants;
+import org.ironriders.subsystems.SwerveSubsystem;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.PS5Controller;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -15,10 +14,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-	private final DriveSubsystem m_exampleSubsystem = new DriveSubsystem();
+	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+	private final SwerveCommands swerveCommands = swerveSubsystem.getSwerveCommands();
 
-	private final CommandXboxController m_driverController =
-	new CommandXboxController(OperatorConstants.kDriverControllerPort);
+	private final PS5Controller driverController =
+	new PS5Controller(DriveConstants.DRIVER_CONTROLLER_PORT);
 
 	/** The container for the robot. Contains subsystems, OI devices, and commands. */
 	public RobotContainer() {
@@ -26,6 +26,12 @@ public class RobotContainer {
 	}
 
 	private void configureBindings() {
-
+		swerveSubsystem.setDefaultCommand(
+			swerveCommands.drive(
+				driverController.getLeftX(),
+				driverController.getLeftY(),
+				driverController.getRightX()
+			)
+		);
 	}
 }
