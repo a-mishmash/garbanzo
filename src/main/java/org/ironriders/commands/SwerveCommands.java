@@ -1,5 +1,7 @@
 package org.ironriders.commands;
 
+import java.util.function.DoubleSupplier;
+
 import org.ironriders.subsystems.SwerveSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -11,9 +13,9 @@ public class SwerveCommands {
 		this.driveSubsystem = driveSubsystem;
 	}
 
-	public Command drive(double translationX, double translationY, double angularRotationX) {
+	public Command drive(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier angularRotationX) {
 		return driveSubsystem.runOnce(() -> {
-			driveSubsystem.drive(translationX, translationY, angularRotationX);
+			driveSubsystem.drive(translationX.getAsDouble(), 0.0, 0.0);
 		});
 	}
 }

@@ -1,10 +1,14 @@
 package org.ironriders.robot;
 
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+
 import org.ironriders.commands.SwerveCommands;
 import org.ironriders.constants.DriveConstants;
 import org.ironriders.subsystems.SwerveSubsystem;
 
 import edu.wpi.first.wpilibj.PS5Controller;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 
 /**
@@ -15,10 +19,10 @@ import edu.wpi.first.wpilibj2.command.ScheduleCommand;
  */
 public class RobotContainer {
 	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-	private final SwerveCommands swerveCommands = swerveSubsystem.getSwerveCommands();
+	private final SwerveCommands swerveCommands = swerveSubsystem.getCommands();
 
-	private final PS5Controller driverController =
-	new PS5Controller(DriveConstants.DRIVER_CONTROLLER_PORT);
+	private final XboxController driverController =
+		new XboxController(DriveConstants.DRIVER_CONTROLLER_PORT);
 
 	/** The container for the robot. Contains subsystems, OI devices, and commands. */
 	public RobotContainer() {
@@ -28,9 +32,9 @@ public class RobotContainer {
 	private void configureBindings() {
 		swerveSubsystem.setDefaultCommand(
 			swerveCommands.drive(
-				driverController.getLeftX(),
-				driverController.getLeftY(),
-				driverController.getRightX()
+				() -> driverController.getLeftX(),
+				() -> driverController.getLeftY(),
+				() -> driverController.getRightX()
 			)
 		);
 	}
