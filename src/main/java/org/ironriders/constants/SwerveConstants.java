@@ -11,6 +11,14 @@ public class SwerveConstants {
 	public static final double SWERVE_MODULE_DISTANCE_X = 12;
 	public static final double SWERVE_MODULE_DISTANCE_Y = 12;
 
+	public static final double SWERVE_MODULE_STEER_P = 0.1;
+	public static final double SWERVE_MODULE_STEER_I = 0.1;
+	public static final double SWERVE_MODULE_STEER_D = 0.001;
+
+	public static final double SWERVE_MODULE_DRIVE_P = 0.1;
+	public static final double SWERVE_MODULE_DRIVE_I = 0.1;
+	public static final double SWERVE_MODULE_DRIVE_D = 0.001;
+
 	// Front Left motor
 	public static final int FRONT_LEFT_MODULE_STEER_CAN_ID = 7;
 	public static final int FRONT_LEFT_MODULE_DRIVE_CAN_ID = 8;
@@ -30,4 +38,6 @@ public class SwerveConstants {
 	public static final int BACK_RIGHT_MODULE_STEER_CAN_ID = 3;
 	public static final int BACK_RIGHT_MODULE_DRIVE_CAN_ID = 4;
 	public static final int BACK_RIGHT_MODULE_ENCODER_ID = 0;
+
+	public static final double WHEEL_RPM_TO_MPS = 24.5672545511;
 }

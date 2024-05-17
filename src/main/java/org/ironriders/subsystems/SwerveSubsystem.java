@@ -3,13 +3,8 @@ package org.ironriders.subsystems;
 import org.ironriders.commands.SwerveCommands;
 import org.ironriders.constants.SwerveConstants;
 
-import com.ctre.phoenix6.configs.CANcoderConfiguration;
-import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -20,7 +15,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.AnalogEncoder;
 
 /**
  * The SwerveSubsystem encompasses everything that the Swerve Drive needs to function.
@@ -92,8 +86,7 @@ public class SwerveSubsystem extends SubsystemBase {
 	}
 
 	/** Vrrrrooooooooom brrrrrrrrr BRRRRRR wheeee BRRR brrrr VRRRRROOOOOOM */
-	public void drive(double translationX, double translationY, double angularRotation)
-	{
+	public void drive(double translationX, double translationY, double angularRotation) {
 		// chassisSpeeds represents the desired speed of the robot
 		ChassisSpeeds chassisSpeeds = new ChassisSpeeds(
 			translationX,
@@ -112,8 +105,7 @@ public class SwerveSubsystem extends SubsystemBase {
 	}
 
 	// Fetch the current swerve module positions.
-    public SwerveModulePosition[] getCurrentSwerveModulePositions()
-    {
+    public SwerveModulePosition[] getCurrentSwerveModulePositions() {
         return new SwerveModulePosition[]{
             new SwerveModulePosition(swerveModules[0].getDistance(), swerveModules[0].getAngle()), // Front-Left
             new SwerveModulePosition(swerveModules[1].getDistance(), swerveModules[1].getAngle()), // Front-Right
@@ -123,8 +115,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
     
     @Override
-    public void periodic()
-    {
+    public void periodic() {
         // Update the odometry every run.
         odometry.update(new Rotation2d(gyro.getAngle()),  getCurrentSwerveModulePositions());
     }
@@ -132,32 +123,5 @@ public class SwerveSubsystem extends SubsystemBase {
 	/** Fetch the SwerveCommands class */
 	public SwerveCommands getCommands() {
 		return swerveCommands;
-	}
-
-	/** Class representing a single Swerve module (drive motor, angle motor) */
-	private class SwerveModule {
-
-		private CANSparkMax steerMotor;
-		private CANSparkMax driveMotor;
-		private PIDController steerPID;
-		private PIDController drivePID;
-		private AnalogEncoder absoluteEncoder;
-
-		public SwerveModule(int steerMotorCANID, int driveMotorCANID, int encoderAnalogID)
-		{
-			steerMotor = new CANSparkMax(steerMotorCANID, MotorType.kBrushless);
-			driveMotor = new CANSparkMax(driveMotorCANID, MotorType.kBrushless);
-			absoluteEncoder = new AnalogEncoder(encoderAnalogID);
-			
-			// Reset everything to factory default
-			driveMotor.restoreFactoryDefaults();
-			steerMotor.restoreFactoryDefaults();
-
-			// PID stuff
-			steerPID = new PIDController(0, 0, 0);
-			drivePID = new PIDController(0, 0, 0);
-
-			steerPID.enableContinuousInput();
-    	}
 	}
 }
