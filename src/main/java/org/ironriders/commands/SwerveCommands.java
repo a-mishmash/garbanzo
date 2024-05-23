@@ -15,7 +15,7 @@ public class SwerveCommands {
 
 	public Command drive(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier angularRotationX) {
 		return driveSubsystem.runOnce(() -> {
-			driveSubsystem.drive(translationX.getAsDouble(), translationY.getAsDouble(), angularRotationX.getAsDouble());
+			driveSubsystem.drive(0.1, 0.0, 0.0);
 		});
 	}
 }
