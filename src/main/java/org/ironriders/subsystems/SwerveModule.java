@@ -2,8 +2,14 @@ package org.ironriders.subsystems;
 
 import org.ironriders.constants.SwerveConstants;
 
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.MotorFeedbackSensor;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkAbsoluteEncoder;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -18,45 +24,48 @@ public class SwerveModule {
     private CANSparkMax driveMotor;
 
     private PIDController steerPID;
-    private PIDController drivePID;
+    private SparkPIDController drivePID;
 
     private AnalogEncoder absoluteEncoder;
     private RelativeEncoder driveEncoder;
 
-    public SwerveModule(int steerMotorCANID, int driveMotorCANID, int encoderAnalogID) {
+    public SwerveModule(String name, int steerMotorCANID, int driveMotorCANID, int encoderAnalogID) {
 
         // Find motor SparkMaxes based on their ID on the CANBUS
         steerMotor = new CANSparkMax(steerMotorCANID, MotorType.kBrushless);
         driveMotor = new CANSparkMax(driveMotorCANID, MotorType.kBrushless);
 
+        steerPID = new PIDController(0, 0, 0);
+        drivePID = driveMotor.getPIDController();
+
         absoluteEncoder = new AnalogEncoder(encoderAnalogID);
         driveEncoder = driveMotor.getEncoder();
         
         // Reset everything to factory defaults
-        driveMotor.restoreFactoryDefaults();
         steerMotor.restoreFactoryDefaults();
+        driveMotor.restoreFactoryDefaults();
 
         // PID stuff
-        steerPID = new PIDController(
-            SwerveConstants.SWERVE_MODULE_STEER_P,
-            SwerveConstants.SWERVE_MODULE_STEER_I,
-            SwerveConstants.SWERVE_MODULE_STEER_D
-        );
-        drivePID = new PIDController(
-            SwerveConstants.SWERVE_MODULE_DRIVE_P, 
-            SwerveConstants.SWERVE_MODULE_DRIVE_I, 
-            SwerveConstants.SWERVE_MODULE_DRIVE_D
-        );
+        steerPID.setP(SwerveConstants.SWERVE_MODULE_STEER_P);
+        steerPID.setI(SwerveConstants.SWERVE_MODULE_STEER_I);
+        steerPID.setD(SwerveConstants.SWERVE_MODULE_STEER_D);
+
+        drivePID.setP(SwerveConstants.SWERVE_MODULE_DRIVE_P);
+        drivePID.setI(SwerveConstants.SWERVE_MODULE_DRIVE_I);
+        drivePID.setD(SwerveConstants.SWERVE_MODULE_DRIVE_D);
 
         // We do this so that the controller doesn't think the shortest path
         // from, for example, 359 to 1 is to go aaaalllllll the way around.
-        steerPID.enableContinuousInput(0, 360);
+        steerPID.enableContinuousInput(0, 90);
+
+        // More PID stuff yippeeeeeee
+        drivePID.setFeedbackDevice((MotorFeedbackSensor) driveEncoder);
+        driveEncoder.setVelocityConversionFactor(SwerveConstants.DRIVE_VELOCITY_CONVERSION_FACTOR);
+        driveEncoder.setPosition(0);
     }
 
-    /** Update the PID Controllers and run the motors based on the output. */
     public void update() {
-        steerMotor.set(steerPID.calculate(getAngle().getDegrees()));
-        driveMotor.set(drivePID.calculate(driveEncoder.getVelocity() * SwerveConstants.WHEEL_RPM_TO_MPS));
+        steerMotor.set(steerPID.calculate(absoluteEncoder.getAbsolutePosition()));
     }
 
     public double getDistance() {
@@ -64,12 +73,12 @@ public class SwerveModule {
     }
     
     public Rotation2d getAngle() {
-        return Rotation2d.fromDegrees(absoluteEncoder.getAbsolutePosition());
+        return Rotation2d.fromDegrees(absoluteEncoder.getAbsolutePosition() * 360);
     }
     
     /** Set the swerve module state. */
     public void setState(SwerveModuleState state) {
         steerPID.setSetpoint(state.angle.getDegrees());
-        drivePID.setSetpoint(state.speedMetersPerSecond);
+        drivePID.setReference(state.speedMetersPerSecond, ControlType.kVelocity);
     }
 }

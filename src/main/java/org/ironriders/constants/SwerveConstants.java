@@ -6,18 +6,21 @@ public class SwerveConstants {
 
     public static final int PIGEON_CAN_ID = 9;
 
-    public static final double SWERVE_MAXIMUM_SPEED = Units.feetToMeters(4.5);
+    public static final double SWERVE_MAXIMUM_SPEED = Units.feetToMeters(4.5); // Meters per Second
 
-	public static final double SWERVE_MODULE_DISTANCE_X = 12;
-	public static final double SWERVE_MODULE_DISTANCE_Y = 12;
+	public static final double SWERVE_MODULE_STEER_TOLERANCE = 5.0; // Degrees
+	public static final double SWERVE_MODULE_DRIVE_TOLERANCE = 0.2; // Meters per Second
 
-	public static final double SWERVE_MODULE_STEER_P = 0.1;
-	public static final double SWERVE_MODULE_STEER_I = 0.1;
-	public static final double SWERVE_MODULE_STEER_D = 0.001;
+	public static final double SWERVE_MODULE_DISTANCE_X = 12; // Inches
+	public static final double SWERVE_MODULE_DISTANCE_Y = 12; // Inches
+
+	public static final double SWERVE_MODULE_STEER_P = 0.17;
+	public static final double SWERVE_MODULE_STEER_I = 0.0;
+	public static final double SWERVE_MODULE_STEER_D = 1.0;
 
 	public static final double SWERVE_MODULE_DRIVE_P = 0.1;
-	public static final double SWERVE_MODULE_DRIVE_I = 0.1;
-	public static final double SWERVE_MODULE_DRIVE_D = 0.001;
+	public static final double SWERVE_MODULE_DRIVE_I = 0.0;
+	public static final double SWERVE_MODULE_DRIVE_D = 0.01;
 
 	// Front Left motor
 	public static final int FRONT_LEFT_MODULE_STEER_CAN_ID = 7;
@@ -39,5 +42,7 @@ public class SwerveConstants {
 	public static final int BACK_RIGHT_MODULE_DRIVE_CAN_ID = 4;
 	public static final int BACK_RIGHT_MODULE_ENCODER_ID = 0;
 
-	public static final double WHEEL_RPM_TO_MPS = 24.5672545511;
+	// Conversion factors
+	public static final double STEER_POSITION_CONVERSION_FACTOR = 28.125;
+	public static final double DRIVE_VELOCITY_CONVERSION_FACTOR = 0.0;
 }

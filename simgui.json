@@ -1,10 +1,20 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [8]": {
+      "AnalogEncoder[2]": {
         "header": {
           "open": true
         }
+      },
+      "SPARK MAX [7]": {
+        "header": {
+          "open": true
+        }
+      }
+    },
+    "Timing": {
+      "window": {
+        "visible": false
       }
     }
   },
@@ -16,6 +26,20 @@
     }
   },
   "NetworkTables Info": {
-    "visible": true
+    "Clients": {
+      "open": true
+    },
+    "Connections": {
+      "open": true
+    },
+    "Server": {
+      "Publishers": {
+        "open": true
+      },
+      "open": true
+    }
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }
