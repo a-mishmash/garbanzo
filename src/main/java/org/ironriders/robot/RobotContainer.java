@@ -7,9 +7,7 @@ import org.ironriders.commands.SwerveCommands;
 import org.ironriders.constants.DriveConstants;
 import org.ironriders.subsystems.SwerveSubsystem;
 
-import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -32,9 +30,9 @@ public class RobotContainer {
 	private void configureBindings() {
 		swerveSubsystem.setDefaultCommand(
 			swerveCommands.drive(
-				() -> driverController.getLeftX(),
 				() -> driverController.getLeftY(),
-				() -> driverController.getRightX()
+				() -> driverController.getLeftX(),
+				() -> driverController.getLeftY()
 			)
 		);
 	}

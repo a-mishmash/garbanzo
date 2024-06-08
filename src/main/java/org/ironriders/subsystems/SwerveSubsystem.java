@@ -10,7 +10,7 @@ import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -31,7 +31,7 @@ public class SwerveSubsystem extends SubsystemBase {
 				new SwerveParser(SwerveConstants.SWERVE_JSON_DIRECTORY)
 					.createSwerveDrive(SwerveConstants.SWERVE_MAXIMUM_SPEED);
 		} catch(IOException e) {
-			// add something here
+			// do something
 		}
 
 		swerveDrive.setHeadingCorrection(false);
@@ -42,13 +42,15 @@ public class SwerveSubsystem extends SubsystemBase {
 	/** Vrrrrooooooooom brrrrrrrrr BRRRRRR wheeee BRRR brrrr VRRRRROOOOOOM */
 	public void drive(double translationX, double translationY, double angularRotation) {
 
-		ChassisSpeeds chassisSpeeds = new ChassisSpeeds();
-		chassisSpeeds.vxMetersPerSecond = translationX * swerveDrive.getMaximumVelocity();
-		chassisSpeeds.vyMetersPerSecond = translationY * swerveDrive.getMaximumVelocity();
-		chassisSpeeds.omegaRadiansPerSecond = angularRotation * swerveDrive.getMaximumAngularVelocity();
+		SmartDashboard.putNumber("Translation X", translationX);
+		SmartDashboard.putNumber("Translation Y", translationY);
+		SmartDashboard.putNumber("Angular Rotation", angularRotation);
+
+		Translation2d translationXY = new Translation2d(translationX * swerveDrive.getMaximumVelocity(), translationY * swerveDrive.getMaximumVelocity());
+		double rotation = 0.0;// angularRotation * swerveDrive.getMaximumAngularVelocity();
 
 		// Make the robot move
-		swerveDrive.driveFieldOriented(chassisSpeeds);
+		swerveDrive.drive(translationXY, rotation, true, false);
 	}
 
 	/** Fetch the SwerveCommands class */
