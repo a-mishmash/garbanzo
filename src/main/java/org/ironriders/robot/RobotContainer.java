@@ -8,6 +8,7 @@ import org.ironriders.constants.DriveConstants;
 import org.ironriders.subsystems.SwerveSubsystem;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -19,8 +20,8 @@ public class RobotContainer {
 	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 	private final SwerveCommands swerveCommands = swerveSubsystem.getCommands();
 
-	private final XboxController driverController =
-		new XboxController(DriveConstants.DRIVER_CONTROLLER_PORT);
+	private final CommandXboxController driverController =
+		new CommandXboxController(DriveConstants.DRIVER_CONTROLLER_PORT);
 
 	/** The container for the robot. Contains subsystems, OI devices, and commands. */
 	public RobotContainer() {
@@ -35,5 +36,8 @@ public class RobotContainer {
 				() -> driverController.getLeftY()
 			)
 		);
+
+		driverController.x().onTrue(swerveCommands.setXLock(() -> true));
+		driverController.x().onFalse(swerveCommands.setXLock(() -> false));
 	}
 }

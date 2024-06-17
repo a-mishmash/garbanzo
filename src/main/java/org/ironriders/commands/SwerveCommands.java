@@ -1,5 +1,6 @@
 package org.ironriders.commands;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import org.ironriders.subsystems.SwerveSubsystem;
@@ -20,6 +21,12 @@ public class SwerveCommands {
 				translationY.getAsDouble(), 
 				angularRotation.getAsDouble()
 			);
+		});
+	}
+
+	public Command setXLock(BooleanSupplier set) {
+		return driveSubsystem.runOnce(() -> {
+			driveSubsystem.setXLock(set.getAsBoolean());
 		});
 	}
 }

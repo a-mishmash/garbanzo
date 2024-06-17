@@ -9,7 +9,9 @@ import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -22,6 +24,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
 	private SwerveCommands swerveCommands;
 	private SwerveDrive swerveDrive;
+
+	private boolean xLocked;
 
 	public SwerveSubsystem() {
 
@@ -42,6 +46,16 @@ public class SwerveSubsystem extends SubsystemBase {
 	/** Vrrrrooooooooom brrrrrrrrr BRRRRRR wheeee BRRR brrrr VRRRRROOOOOOM */
 	public void drive(double translationX, double translationY, double angularRotation) {
 
+		if(xLocked) {
+			swerveDrive.setModuleStates(new SwerveModuleState[] {
+				new SwerveModuleState(0.1, new Rotation2d(Math.toRadians(225.0))),
+				new SwerveModuleState(0.1, new Rotation2d(Math.toRadians(135.0))),
+				new SwerveModuleState(0.1, new Rotation2d(Math.toRadians(-225.0))),
+				new SwerveModuleState(0.1, new Rotation2d(Math.toRadians(135.0))),
+			}, false);
+			return;
+		}
+
 		SmartDashboard.putNumber("Translation X", translationX);
 		SmartDashboard.putNumber("Translation Y", translationY);
 		SmartDashboard.putNumber("Angular Rotation", angularRotation);
@@ -51,6 +65,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
 		// Make the robot move
 		swerveDrive.drive(translationXY, rotation, true, false);
+	}
+
+	public void setXLock(boolean set) {
+		xLocked = set;
 	}
 
 	/** Fetch the SwerveCommands class */
