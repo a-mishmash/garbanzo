@@ -4,8 +4,9 @@
       "left": 12
     },
     "absoluteEncoderOffset": 193.0,
+  
     "drive": {
-      "type": "sparkmax",
+      "type": "talonfx",
       "id": 6,
       "canbus": null
     },

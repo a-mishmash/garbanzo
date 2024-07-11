@@ -44,24 +44,24 @@ public class SwerveSubsystem extends SubsystemBase {
 	}
 
 	/** Vrrrrooooooooom brrrrrrrrr BRRRRRR wheeee BRRR brrrr VRRRRROOOOOOM */
-	public void drive(double translationX, double translationY, double angularRotation) {
+	public void drive(double inputX, double inputY, double angularInput) {
 
-		if(xLocked) {
-			swerveDrive.setModuleStates(new SwerveModuleState[] {
-				new SwerveModuleState(0.1, new Rotation2d(Math.toRadians(225.0))),
-				new SwerveModuleState(0.1, new Rotation2d(Math.toRadians(135.0))),
-				new SwerveModuleState(0.1, new Rotation2d(Math.toRadians(-225.0))),
-				new SwerveModuleState(0.1, new Rotation2d(Math.toRadians(135.0))),
-			}, false);
-			return;
-		}
+		// if(xLocked) {
+		// 	swerveDrive.setModuleStates(new SwerveModuleState[] {
+		// 		new SwerveModuleState(0.1, new Rotation2d(Math.toRadians(225.0))),
+		// 		new SwerveModuleState(0.1, new Rotation2d(Math.toRadians(135.0))),
+		// 		new SwerveModuleState(0.1, new Rotation2d(Math.toRadians(-225.0))),
+		// 		new SwerveModuleState(0.1, new Rotation2d(Math.toRadians(135.0))),
+		// 	}, false);
+		// 	return;
+		// }
 
-		SmartDashboard.putNumber("Translation X", translationX);
-		SmartDashboard.putNumber("Translation Y", translationY);
-		SmartDashboard.putNumber("Angular Rotation", angularRotation);
+		SmartDashboard.putNumber("Input X", inputX);
+		SmartDashboard.putNumber("Input Y", inputY);
+		SmartDashboard.putNumber("Input Rotation", angularInput);
 
-		Translation2d translationXY = new Translation2d(translationX * swerveDrive.getMaximumVelocity(), translationY * swerveDrive.getMaximumVelocity());
-		double rotation = 0.0;// angularRotation * swerveDrive.getMaximumAngularVelocity();
+		Translation2d translationXY = new Translation2d(inputX * swerveDrive.getMaximumVelocity(), inputY * swerveDrive.getMaximumVelocity());
+		double rotation = angularInput * swerveDrive.getMaximumAngularVelocity();
 
 		// Make the robot move
 		swerveDrive.drive(translationXY, rotation, true, false);

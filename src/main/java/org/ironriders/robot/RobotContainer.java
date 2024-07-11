@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import org.ironriders.commands.SwerveCommands;
 import org.ironriders.constants.DriveConstants;
 import org.ironriders.subsystems.SwerveSubsystem;
+import org.ironriders.utils.ControlUtils;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -31,9 +32,9 @@ public class RobotContainer {
 	private void configureBindings() {
 		swerveSubsystem.setDefaultCommand(
 			swerveCommands.drive(
-				() -> driverController.getLeftY(),
-				() -> driverController.getLeftX(),
-				() -> driverController.getLeftY()
+				() -> 0.1,// ControlUtils.controlCurve(-driverController.getLeftY()),
+				() -> 0.0,// ControlUtils.controlCurve(-driverController.getLeftX()),
+				() -> 0.0// ControlUtils.controlCurve(driverController.getRightX())
 			)
 		);
 
