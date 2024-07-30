@@ -32,9 +32,9 @@ public class RobotContainer {
 	private void configureBindings() {
 		swerveSubsystem.setDefaultCommand(
 			swerveCommands.drive(
-				() -> 0.1,// ControlUtils.controlCurve(-driverController.getLeftY()),
-				() -> 0.0,// ControlUtils.controlCurve(-driverController.getLeftX()),
-				() -> 0.0// ControlUtils.controlCurve(driverController.getRightX())
+				() -> ControlUtils.controlCurve(-driverController.getLeftY()),
+				() -> ControlUtils.controlCurve(-driverController.getLeftX()),
+				() -> ControlUtils.controlCurve(-driverController.getRightX())
 			)
 		);
 

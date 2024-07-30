@@ -43,7 +43,7 @@ public class SwerveSubsystem extends SubsystemBase {
 		SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
 	}
 
-	/** Vrrrrooooooooom brrrrrrrrr BRRRRRR wheeee BRRR brrrr VRRRRROOOOOOM */
+	/** Vrrrrooooooooom brrrrrrrrr BRRRRRR wheeee BRRR brrrr VRRRRROOOOOOM ZOOOOOOM ZOOOOM WAHOOOOOOOOO WAHAHAHHA */
 	public void drive(double inputX, double inputY, double angularInput) {
 
 		// if(xLocked) {
@@ -61,7 +61,7 @@ public class SwerveSubsystem extends SubsystemBase {
 		SmartDashboard.putNumber("Input Rotation", angularInput);
 
 		Translation2d translationXY = new Translation2d(inputX * swerveDrive.getMaximumVelocity(), inputY * swerveDrive.getMaximumVelocity());
-		double rotation = angularInput * swerveDrive.getMaximumAngularVelocity();
+		double rotation = angularInput * swerveDrive.getMaximumAngularVelocity() * SwerveConstants.SWERVE_ANGULAR_SPEED_MULTIPLIER;
 
 		// Make the robot move
 		swerveDrive.drive(translationXY, rotation, true, false);

@@ -4,7 +4,6 @@
       "left": 12
     },
     "absoluteEncoderOffset": 193.0,
-  
     "drive": {
       "type": "talonfx",
       "id": 6,
