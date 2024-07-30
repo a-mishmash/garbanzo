@@ -1,10 +1,6 @@
-package org.ironriders.subsystems;
+package org.ironriders.drive;
 
 import java.io.IOException;
-
-import org.ironriders.commands.SwerveCommands;
-import org.ironriders.constants.SwerveConstants;
-
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
@@ -20,20 +16,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * It keeps track of the robot's position and angle, and uses the controller
  * input to figure out how the individual modules need to turn and be angled.
  */
-public class SwerveSubsystem extends SubsystemBase {
+public class DriveSubsystem extends SubsystemBase {
 
-	private SwerveCommands swerveCommands;
+	private DriveCommands swerveCommands;
 	private SwerveDrive swerveDrive;
 
 	private boolean xLocked;
 
-	public SwerveSubsystem() {
+	public DriveSubsystem() {
 
-		swerveCommands = new SwerveCommands(this);
+		swerveCommands = new DriveCommands(this);
 		try {
 			swerveDrive = 
-				new SwerveParser(SwerveConstants.SWERVE_JSON_DIRECTORY)
-					.createSwerveDrive(SwerveConstants.SWERVE_MAXIMUM_SPEED);
+				new SwerveParser(DriveConstants.SWERVE_JSON_DIRECTORY)
+					.createSwerveDrive(DriveConstants.SWERVE_MAXIMUM_SPEED);
 		} catch(IOException e) {
 			// do something
 		}
@@ -61,7 +57,7 @@ public class SwerveSubsystem extends SubsystemBase {
 		SmartDashboard.putNumber("Input Rotation", angularInput);
 
 		Translation2d translationXY = new Translation2d(inputX * swerveDrive.getMaximumVelocity(), inputY * swerveDrive.getMaximumVelocity());
-		double rotation = angularInput * swerveDrive.getMaximumAngularVelocity() * SwerveConstants.SWERVE_ANGULAR_SPEED_MULTIPLIER;
+		double rotation = angularInput * swerveDrive.getMaximumAngularVelocity() * DriveConstants.SWERVE_ANGULAR_SPEED_MULTIPLIER;
 
 		// Make the robot move
 		swerveDrive.drive(translationXY, rotation, true, false);
@@ -72,7 +68,7 @@ public class SwerveSubsystem extends SubsystemBase {
 	}
 
 	/** Fetch the SwerveCommands class */
-	public SwerveCommands getCommands() {
+	public DriveCommands getCommands() {
 		return swerveCommands;
 	}
 }

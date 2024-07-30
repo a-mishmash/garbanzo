@@ -1,16 +1,14 @@
-package org.ironriders.commands;
+package org.ironriders.drive;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-import org.ironriders.subsystems.SwerveSubsystem;
-
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class SwerveCommands {
-	private final SwerveSubsystem driveSubsystem;
+public class DriveCommands {
+	private final DriveSubsystem driveSubsystem;
 
-	public SwerveCommands(SwerveSubsystem driveSubsystem) {
+	public DriveCommands(DriveSubsystem driveSubsystem) {
 		this.driveSubsystem = driveSubsystem;
 	}
 

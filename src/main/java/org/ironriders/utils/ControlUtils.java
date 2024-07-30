@@ -1,6 +1,6 @@
 package org.ironriders.utils;
 
-import org.ironriders.constants.DriveConstants;
+import org.ironriders.drive.DriveConstants;
 
 /**
  * Class for mapping input to cubic control curve + deadband.

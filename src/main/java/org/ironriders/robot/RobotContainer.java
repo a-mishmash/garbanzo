@@ -3,9 +3,9 @@ package org.ironriders.robot;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
-import org.ironriders.commands.SwerveCommands;
-import org.ironriders.constants.DriveConstants;
-import org.ironriders.subsystems.SwerveSubsystem;
+import org.ironriders.drive.DriveCommands;
+import org.ironriders.drive.DriveConstants;
+import org.ironriders.drive.DriveSubsystem;
 import org.ironriders.utils.ControlUtils;
 
 import edu.wpi.first.wpilibj.XboxController;
@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-	private final SwerveCommands swerveCommands = swerveSubsystem.getCommands();
+	private final DriveSubsystem swerveSubsystem = new DriveSubsystem();
+	private final DriveCommands swerveCommands = swerveSubsystem.getCommands();
 
 	private final CommandXboxController driverController =
 		new CommandXboxController(DriveConstants.DRIVER_CONTROLLER_PORT);
