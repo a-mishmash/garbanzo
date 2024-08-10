@@ -4,6 +4,7 @@ import org.ironriders.drive.DriveConstants;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -15,31 +16,38 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
 
-	private RobotContainer m_robotContainer;
-
-	private final XboxController driverController =
-		new XboxController(DriveConstants.DRIVER_CONTROLLER_PORT);
-
-	/**
-	 * This function is run when the robot is first started up and should be used for any
-	 * initialization code.
-	 */
-	@Override
-	public void robotInit() {
-		m_robotContainer = new RobotContainer();
+	private enum Test {
+		TEST1,
+		TEST2
 	}
 
-	/**
-	 * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
-	 * that you want ran during disabled, autonomous, teleoperated and test.
-	 *
-	 * <p>This runs after the mode specific periodic functions, but before LiveWindow and
-	 * SmartDashboard integrated updating.
-	 */
+	private static final Test DEFAULT_AUTO = Test.TEST1;
+
+	private static SendableChooser<Test> autoSendableChooser = new SendableChooser<>();
+
+	private RobotContainer robotContainer;
+
+	@Override
+	public void robotInit() {
+		autoSendableChooser.setDefaultOption("Test 1", DEFAULT_AUTO);
+		autoSendableChooser.addOption("Test 2", Test.TEST2);
+		SmartDashboard.putData("Autonomous Routine", autoSendableChooser);
+
+		robotContainer = new RobotContainer();
+	}
+
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-		SmartDashboard.putNumber("1 Controller Left X", driverController.getLeftX());
-		SmartDashboard.putNumber("1 Controller Left Y", driverController.getLeftY());
+	}
+
+	@Override
+	public void autonomousInit() {
+
+	}
+
+	@Override
+	public void autonomousPeriodic() {
+		
 	}
 }

@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 import org.ironriders.drive.DriveCommands;
 import org.ironriders.drive.DriveConstants;
 import org.ironriders.drive.DriveSubsystem;
-import org.ironriders.utils.ControlUtils;
+import org.ironriders.util.ControlUtils;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -31,14 +31,11 @@ public class RobotContainer {
 
 	private void configureBindings() {
 		swerveSubsystem.setDefaultCommand(
-			swerveCommands.drive(
+			swerveCommands.driveTeleop(
 				() -> ControlUtils.controlCurve(-driverController.getLeftY()),
 				() -> ControlUtils.controlCurve(-driverController.getLeftX()),
 				() -> ControlUtils.controlCurve(-driverController.getRightX())
 			)
 		);
-
-		driverController.x().onTrue(swerveCommands.setXLock(() -> true));
-		driverController.x().onFalse(swerveCommands.setXLock(() -> false));
 	}
 }

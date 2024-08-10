@@ -21,8 +21,10 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Autonomous Routine": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
-      "/SmartDashboard/Pigeon 2 (v6) [9]": "Gyro"
+      "/SmartDashboard/Pigeon 2 (v6) [9]": "Gyro",
+      "/SmartDashboard/SendableChooser[0]": "String Chooser"
     }
   },
   "NetworkTables Info": {
@@ -37,7 +39,8 @@
         "open": true
       },
       "open": true
-    }
+    },
+    "visible": true
   },
   "NetworkTables View": {
     "visible": false

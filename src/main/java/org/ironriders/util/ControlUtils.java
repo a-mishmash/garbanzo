@@ -1,4 +1,4 @@
-package org.ironriders.utils;
+package org.ironriders.util;
 
 import org.ironriders.drive.DriveConstants;
 
